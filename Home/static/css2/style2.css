@@ -1,0 +1,129 @@
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    """background-image: url('background3.jpg');"""
+     background-color: blue;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+    background-attachment: fixed;
+}
+
+header {
+font-family: Arial, sans-serif;
+    background-color: rgba(44, 62, 80, 0.8);
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    display: block;
+}
+
+.company-name h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.box {
+    width: 400px;
+    height: 100px;
+    margin: 20px;
+    background-color: rgba(52, 73, 94, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.box .icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.box p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+}
+
+.box:hover .icon {
+    transform: rotate(360deg); Rotation de l'icôn
+
+
+ /* Ajoutez ces styles à votre fichier styles.css ou insérez-les ici */
+   @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .box-inner .icon {
+            animation: spin 2s linear infinite; /* Animation de rotation */
+        }
+
+
+/* styles.css */
+
+
+
+h2 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td a {
+    color: #007bff; /* Couleur des liens */
+    text-decoration: none;
+}
+
+td a:hover {
+    text-decoration: underline; /* Souligner les liens au survol */
+}
+

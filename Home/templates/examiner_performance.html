@@ -1,0 +1,55 @@
+<!-- examiner_performance.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examiner les performances</title>
+    <style>
+        /* Style du tableau */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #dddddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Style du titre */
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des employés et performances</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de l'employé</th>
+                <th>Projets réalisés</th>
+                <th>Assiduité</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for performance in employes_performances %}
+            <tr>
+                <td>{{ performance.employe.nom }}</td>
+                <td>{{ performance.projets_realises }}</td>
+                <td>{{ performance.assiduite }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

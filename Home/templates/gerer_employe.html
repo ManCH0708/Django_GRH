@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gérer les employés</title>
+    <style>
+        /* Ajoutez votre CSS personnalisé ici */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        .edit {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des employés</h1>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Ajouter employé</button>
+    </form>
+
+    <form method="GET" action="">
+        <input type="text" name="search" placeholder="Rechercher employé">
+        <button type="submit">Rechercher</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Action</th>
+        </tr>
+        {% for employe in employes %}
+        <tr>
+            <td contenteditable="true" class="edit" id="nom_{{ employe.id }}">{{ employe.nom }}</td>
+            <td contenteditable="true" class="edit" id="prenom_{{ employe.id }}">{{ employe.prenom }}</td>
+            <td>
+                <button class="edit" onclick="saveChanges('{{ employe.id }}')">Enregistrer</button>
+                <a href="{% url 'supprimer_employe' employe.id %}">Supprimer</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+
+<script>
+    function saveChanges(id) {
+        var nom = document.getElementById('nom_' + id).innerText;
+        var prenom = document.getElementById('prenom_' + id).innerText;
+
+        // Envoie des données modifiées au serveur par Ajax
+        fetch('/modifier_employe/' + id, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),  // Récupère le jeton CSRF du cookie
+            },
+            body: JSON.stringify({
+                nom: nom,
+                prenom: prenom,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Les modifications ont été enregistrées avec succès
+                alert('Les modifications ont été enregistrées avec succès.');
+            } else {
+                // Une erreur s'est produite lors de l'enregistrement des modifications
+                alert('Une erreur s\'est produite lors de l\'enregistrement des modifications.');
+                console.error(data.errors);
+            }
+        })
+        .catch(error => {
+            // Une erreur s'est produite lors de l'envoi de la requête
+            console.error('Une erreur s\'est produite lors de l\'envoi de la requête:', error);
+        });
+    }
+
+    // Fonction pour récupérer le jeton CSRF du cookie
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+</body>
+</html>

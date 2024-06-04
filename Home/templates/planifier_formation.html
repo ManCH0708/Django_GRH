@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planifier une formation</title>
+    <style>
+        /* Styles CSS pour le message de succès */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        /* Styles CSS pour la table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Styles CSS pour le bouton */
+        .envoyer-email {
+            padding: 8px 12px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .envoyer-email:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des employés appelés à la formation</h1>
+
+    <!-- Affichage du message de succès s'il est défini -->
+    <div id="success-message" class="alert alert-success" style="display: none;">
+        L'email a été envoyé avec succès.
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de l'employé</th>
+                <th>Département</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appel in appels_formation %}
+            <tr>
+                <td>{{ appel.employe.nom }}</td>
+                <td>{{ appel.employe.departement }}</td>
+                <td>{{ appel.employe.email }}</td>
+                <td>
+                    <button class="envoyer-email" data-employe="{{ appel.employe.id }}">Envoyer un email</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+    // Fonction pour envoyer l'e-mail et afficher le message de succès
+    document.querySelectorAll('.envoyer-email').forEach(button => {
+        button.addEventListener('click', async function() {
+            const employeId = this.getAttribute('data-employe');
+            const response = await fetch('/home/envoyer_email/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ employe_id: employeId })
+            });
+            if (response.ok) {
+                // Afficher le message de succès
+                const successMessage = document.getElementById('success-message');
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000); // Masquer le message après 3 secondes
+            }
+        });
+    });
+    </script>
+
+</body>
+</html>

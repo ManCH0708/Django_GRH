@@ -1,0 +1,85 @@
+<!-- gerer_candidature.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gérer les candidatures</title>
+</head>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2; /* Couleur de fond */
+        }
+
+        h2 {
+            color: #333; /* Couleur du titre */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Couleur de fond de l'en-tête du tableau */
+        }
+
+        td a {
+            color: #007bff; /* Couleur des liens */
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline; /* Souligner les liens au survol */
+        }
+    </style>
+<body>
+    <h1>Liste des candidatures</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>CV</th>
+                <th>motivation</th>
+                <th>Accepter</th>
+                <th>Rejeter</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidature in candidatures %}
+            <tr>
+                <td>{{ candidature.nom }}</td>
+                <td>{{ candidature.prenom }}</td>
+                <td>{{ candidature.email }}</td>
+                <td><a href="{% url 'download_pdf' candidature.cv.name %}" target="_blank">Télécharger CV</a></td>
+                <td><a href="{% url 'download_pdf' candidature.motivation.name %}" target="_blank">Télécharger Motivation</a></td>
+                <td><button type="submit" name="approve-{{ candidature.id }}">Accepter</button></td>
+                <td><button type="submit" name="reject-{{ candidature.id }}">Rejeter</button></td>
+
+            </tr>
+            {% endfor %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </tbody>
+    </table>
+</body>
+</html>

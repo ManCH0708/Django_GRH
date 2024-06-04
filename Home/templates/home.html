@@ -1,0 +1,52 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface RH</title>
+    <link rel="stylesheet" href="{% static 'css2/style2.css' %}">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="{% static 'company_logo.png' %}" alt="Logo de l'entreprise">
+    </div>
+    <div class="company-name">
+        <h1>Mz tech</h1>
+    </div>
+</header>
+<div class="container">
+    <a href="{% url 'gerer_employe' %}" class="box">
+        <div class="box-inner">
+            <span class="icon">&#128101;</span>
+            <p>Gérer Employé</p>
+        </div>
+    </a>
+    <a href="{% url 'gerer_conge' %}" class="box">
+        <div class="box-inner">
+            <span class="icon">&#128197;</span>
+            <p>Gérer Congé</p>
+        </div>
+    </a>
+    <a href="{% url 'planifier_formation' %}" class="box">
+        <div class="box-inner">
+            <span class="icon">&#128188;</span>
+            <p>Planifier Formation</p>
+        </div>
+    </a>
+    <a href="{% url 'examiner_performance' %}" class="box">
+        <div class="box-inner">
+            <span class="icon">&#128203;</span>
+            <p>Examiner Performance</p>
+        </div>
+    </a>
+     <a href="{% url 'examiner_candidature' %}" class="box">
+        <div class="box-inner">
+            <span class="icon">&#128231;</span>
+            <p>Examiner Candidature</p>
+        </div>
+    </a>
+</div>
+</body>
+</html>

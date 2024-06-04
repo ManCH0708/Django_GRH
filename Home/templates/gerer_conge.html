@@ -1,0 +1,75 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gérer les demandes de congé</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2; /* Couleur de fond */
+        }
+
+        h2 {
+            color: #333; /* Couleur du titre */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Couleur de fond de l'en-tête du tableau */
+        }
+
+        td a {
+            color: #007bff; /* Couleur des liens */
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline; /* Souligner les liens au survol */
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des demandes de congé</h1>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Matricule</th>
+                <th>NOM</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Raison</th>
+                <th>Approuver</th>
+                <th>Rejeter</th>
+            </tr>
+            {% for conge in demandesconge %}
+            <tr>
+                <td>{{ conge.employe.matricule }}</td>
+                <td>{{ conge.employe.nom }}</td>
+                <td>{{ conge.date_debut }}</td>
+                <td>{{ conge.date_fin }}</td>
+                <td>{{ conge.raison }}</td>
+                <td><button type="submit" name="approve-{{ conge.id }}">Approuver</button></td>
+                <td><button type="submit" name="reject-{{ conge.id }}">Rejeter</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
